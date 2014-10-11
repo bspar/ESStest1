@@ -9,7 +9,7 @@ def index():
 
 
 def main():
-    run(app=app, host='localhost', port=8080, debug=True)
+    run(app=app, host='0.0.0.0', port=8080, debug=True)
 
 session_opts = {
     'session.type': 'file',
