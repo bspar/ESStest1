@@ -3,6 +3,7 @@
 from bottle import app, route, run, request, post, static_file
 from beaker.middleware import SessionMiddleware
 from cork import Cork
+from simplecrypt import encrypt
 import logging, sqlite3
 
 @route('/')
@@ -21,6 +22,25 @@ def logout():
 
 @post('/register')
 def do_register():
+    password = post_get('password')
+    user = (
+        encrypt(password, post_get('username')),
+        encrypt(password, post_get('name')),
+        encrypt(password, post_get('studentid')),
+        encrypt(password, post_get('ssn')),
+        encrypt(password, post_get('ccn')),
+        encrypt(password, post_get('ccv')),
+        encrypt(password, post_get('phone')),
+        encrypt(password, post_get('cell')),
+        encrypt(password, post_get('address')),
+        encrypt(password, post_get('city')),
+        encrypt(password, post_get('state')),
+        encrypt(password, post_get('zip')),
+        encrypt(password, post_get('email')),
+        0,
+    )
+    cur = conn.cursor()
+    cur.execute('INSERT INTO PII VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', user)
     aaa.register(post_get('username'), post_get('password'), post_get('email_address'))
 
 @route('/js/<f>')
@@ -52,7 +72,7 @@ session_opts = {
 }
 app = SessionMiddleware(app(), session_opts)
 conn = sqlite3.connect('pii.db')
-# schema: PII(Username TEXT, Name TEXT, StudentID TEXT, SSN TEXT, CCN TEXT, CCV TEXT, Phone TEXT, Cell TEXT, Address TEXT, City, TEXT, State TEXT, Zip TEXT, Email TEXT)
+# schema: PII(Username TEXT, Name TEXT, StudentID TEXT, SSN TEXT, CCN TEXT, CCV TEXT, Phone TEXT, Cell TEXT, Address TEXT, City TEXT, State TEXT, Zip TEXT, Email TEXT, Enabled INTEGER)
 
 # admin user: 'admin', 'soopr-secear'
 
