@@ -49,6 +49,12 @@ def jsres(f):
 @route('/css/<f>')
 def cssres(f):
     return static_file('css/%s' % (f), root='./views')
+@route('/font-awesome-4.1.0/<d>/<f>')
+def fawesomeres(d, f):
+    return static_file('%s' % (f), root='./views/font-awesome-4.1.0/%s' % (d))
+@route('/img/<f>')
+def imgres(f):
+    return static_file('img/%s' % (f), root='./views')
 
 def postd():
     return request.forms
