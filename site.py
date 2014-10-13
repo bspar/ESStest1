@@ -52,6 +52,7 @@ session_opts = {
 }
 app = SessionMiddleware(app(), session_opts)
 conn = sqlite3.connect('pii.db')
+# schema: PII(Username TEXT, Name TEXT, StudentID TEXT, SSN TEXT, CCN TEXT, CCV TEXT, Phone TEXT, Cell TEXT, Address TEXT, City, TEXT, State TEXT, Zip TEXT, Email TEXT)
 
 # admin user: 'admin', 'soopr-secear'
 
