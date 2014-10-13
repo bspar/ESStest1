@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
 
-from bottle import app, route, run, request, post, get, static_file
+from bottle import app, route, run, request, post, static_file
 from beaker.middleware import SessionMiddleware
 from cork import Cork
-import logging
+import logging, sqlite3
 
 @route('/')
 def index():
@@ -18,10 +18,6 @@ def do_login():
 @route('/logout')
 def logout():
     aaa.logout(success_redirect='/login')
-
-@get('/register')
-def register():
-    pass
 
 @post('/register')
 def do_register():
@@ -55,8 +51,11 @@ session_opts = {
     'session.auto': True
 }
 app = SessionMiddleware(app(), session_opts)
+conn = sqlite3.connect('pii.db')
 
 # admin user: 'admin', 'soopr-secear'
 
 if __name__ == '__main__':
+    if not conn:
+        raise Exception('Cannot connect to pii.db')
     main()
