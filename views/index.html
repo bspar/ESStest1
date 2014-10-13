@@ -1,0 +1,379 @@
+<!--
+This is a modified page which uses the "Grayscale" Bootstrap Template.
+Because it's pretty and we like pretty.
+
+The template can be accessed and downloaded here:
+http://startbootstrap.com/template-overviews/grayscale/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Welcome - STUPIDCOMP</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i>  <span class="light">STUPID</span>COMP
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download">Register</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Sign In</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">Welcome</h1>
+                        <p class="intro-text">STUPIDCOMP is the best thing to happen since Enron.<br>You can trust us.<br>But we don't trust you.<br>Just wanted to make that clear.</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>We Are STUPID.</h2>
+                <p>We care about your identity. That's why we store it for you! We need it for services. Lots of services that we promise we'll provide you. Sooo many services. Like we can't even begin to talk about all the services we're going to provide for you because we care about your privacy <em>that</em> much.</p>
+                <p>The important thing is that you <a class="page-scroll" href="#download">sign up now</a> with your personal, private information that we need to have and store so you can get started receiving the services that we promise we'll provide you.</p>
+                <p>We promise.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Are You Ready?</h2>
+                    <p>Because we are ready.<br>We are ready for the information that you are going to provide to us for promised services which we promise to provide.<br>Wonderful, wonderful <span style="text-decoration:line-through;">information</span> services.</p>
+                    <br><br>
+                    <!--Bootstrap form from http://bootsnipp.com/forms-->
+                    <!--Data names:
+                    	name
+                    	studentid
+                    	ssn
+                    	ccn
+                    	ccv
+                    	phone
+                    	cell
+                    	address
+                    	city
+                    	state
+                    	zip
+                    	email
+                    	username
+                    	password
+                    -->
+                    <form action="REGISTERHERE" method="POST" class="form-horizontal">
+					<fieldset>
+
+					<!-- Form Name -->
+					<h3>Register</h3>
+
+					<!-- Text input-->
+					<div class="col-lg-2">
+					</div>
+					<div class="col-lg-4">
+					<div class="control-group">
+					  <label class="control-label" for="name">Name</label>
+					  <div class="controls">
+					    <input id="name" name="name" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="studentid">ID Number</label>
+					  <div class="controls">
+					    <input id="studentid" name="studentid" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="ssn">SSN</label>
+					  <div class="controls">
+					    <input id="ssn" name="ssn" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="ccn">Credit Card Number</label>
+					  <div class="controls">
+					    <input id="ccn" name="ccn" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="ccv">CCV</label>
+					  <div class="controls">
+					    <input id="ccv" name="ccv" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="phone">Phone Number</label>
+					  <div class="controls">
+					    <input id="phone" name="phone" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!--Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="cell">Cell Number</label>
+					  <div class="controls">
+					    <input id="cell" name="cell" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="col-lg-4">
+					<div class="control-group">
+					  <label class="control-label" for="address">Address</label>
+					  <div class="controls">
+					    <input id="address" name="address" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="city">City</label>
+					  <div class="controls">
+					    <input id="city" name="city" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="state">State</label>
+					  <div class="controls">
+					    <input id="state" name="state" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label" for="state">Zip</label>
+					  <div class="controls">
+					    <input id="zip" name="zip" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="email">Email Address</label>
+					  <div class="controls">
+					    <input id="email" name="email" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="control-group">
+					  <label class="control-label" for="username">Username</label>
+					  <div class="controls">
+					    <input id="username" name="username" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+
+					<!-- Password input-->
+					<div class="control-group">
+					  <label class="control-label" for="password">Password</label>
+					  <div class="controls">
+					    <input id="password" name="password" type="password" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+					</div>
+
+					<div class="col-lg-2">
+					</div>
+
+					<!-- Button -->
+					<div class="col-lg-12">
+					<div class="control-group">
+					  <label class="control-label" for="submit"></label>
+					  <div class="controls">
+					    <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+					  </div>
+					</div>
+					</div>
+
+					</fieldset>
+					</form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+				<!--Bootstrap form once again from http://bootsnipp.com/forms-->
+				<!--Data names:
+					username
+					password
+				-->
+                    <form action="LOGINHERE" method="POST" class="form-horizontal">
+					<fieldset>
+
+					<!-- Form Name -->
+					<h3>Already a User?</h3>
+
+					<p>Sweet. You can sign in for those services then.</p>
+
+					<!-- Text input-->
+					<div class="col-lg-2">
+					</div>
+
+					<!-- Text input-->
+					<div class="col-lg-4">
+					<div class="control-group">
+					  <label class="control-label" for="username">Username</label>
+					  <div class="controls">
+					    <input id="username" name="username" type="text" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+					</div>
+
+					<!-- Password input-->
+					<div class="col-lg-4">
+					<div class="control-group">
+					  <label class="control-label" for="password">Password</label>
+					  <div class="controls">
+					    <input id="password" name="password" type="password" placeholder="" class="input-large" required="">
+					    
+					  </div>
+					</div>
+					</div>
+
+					<div class="col-lg-2">
+					</div>
+
+					<!-- Button -->
+					<div class="col-lg-12">
+					<div class="control-group">
+					  <label class="control-label" for="submit"></label>
+					  <div class="controls">
+					    <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+					  </div>
+					</div>
+					</div>
+
+					</fieldset>
+					</form>
+            </div>
+        </div>
+    </section>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <!-- Map Section -->
+    <!--<div id="map"></div>-->
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; StupidComp 2014</p>
+        </div>
+    </footer>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+
+</body>
+
+</html>
