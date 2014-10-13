@@ -1,11 +1,11 @@
 #!/usr/bin/env python2
 
-from bottle import app, route, run, template
+from bottle import app, route, run, template, static_file
 from beaker.middleware import SessionMiddleware
 
 @route('/')
 def index():
-    return template('index.tmp')
+    return static_file('index.html', root='./views')
 
 
 def main():
