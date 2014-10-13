@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
 
-from bottle import app, route, run, template, request, post, get
+from bottle import app, route, run, request, post, get, static_file
 from beaker.middleware import SessionMiddleware
 from cork import Cork
 import logging
 
 @route('/')
 def index():
-    return template('index.tmp')
+    return static_file('index.html', root='./views')
 
 @post('/login')
 def do_login():
