@@ -27,6 +27,13 @@ def register():
 def do_register():
     aaa.register(post_get('username'), post_get('password'), post_get('email_address'))
 
+@route('/js/<f>')
+def jsres(f):
+    return static_file('js/%s' % (f), root='./views')
+@route('/css/<f>')
+def cssres(f):
+    return static_file('css/%s' % (f), root='./views')
+
 def postd():
     return request.forms
 
@@ -36,7 +43,7 @@ def post_get(name, default=''):
 def main():
     run(app=app, host='0.0.0.0', port=8080, debug=True)
 
-aaa = Cork('example_conf', email_sender='federico.ceratto@gmail.com', smtp_url='smtp://smtp.magnet.ie')
+aaa = Cork('cork_conf', email_sender='bspar@bspar.org', smtp_url='smtp://smtp.magnet.ie')
 
 logging.basicConfig(format='localhost - - [%(asctime)s] %(message)s', level=logging.DEBUG)
 log = logging.getLogger(__name__)
@@ -48,6 +55,8 @@ session_opts = {
     'session.auto': True
 }
 app = SessionMiddleware(app(), session_opts)
+
+# admin user: 'admin', 'soopr-secear'
 
 if __name__ == '__main__':
     main()
