@@ -1,10 +1,12 @@
 #!/usr/bin/env python2
 
-from bottle import app, route, run, request, post, static_file
+from bottle import app, route, run, request, post, static_file, template
 from beaker.middleware import SessionMiddleware
 from cork import Cork
-from simplecrypt import encrypt
-import logging, sqlite3
+from simplecrypt import encrypt, decrypt
+import logging, sqlite3, gnupg, base64
+
+admin_email = 'bspar@bspar.org'
 
 @route('/')
 def index():
@@ -14,34 +16,64 @@ def index():
 def do_login():
     username = post_get('username')
     password = post_get('password')
-    aaa.login(username, password, success_redirect='/', fail_redirect='/login')
+    session = request.environ['beaker.session']
+    row = conn.execute('SELECT Username, Name, StudentID from PII WHERE Username=?', (username,)).fetchone()
+    if not row:
+        return 'Nope. Try again.'
+    session['username'] = row[0]
+    session['name'] = decrypt(password, base64.b64decode(row[1]))
+    session['studentid'] = decrypt(password, base64.b64decode(row[2]))
+    session.save()
+    aaa.login(username, password, success_redirect='/services', fail_redirect='/')
+
+@route('/services')
+def services():
+    session = request.environ['beaker.session']
+    return template('''
+        <p>Look at all these services! The more services listed here, the more you can tell how much we care about you. Yes, we care /that/ much!
+        <p>User: {{username}}
+        <p>Name: {{name}}
+        <p>StudentID: {{studentid}}
+    ''', username=session['username'], name=session['name'], studentid=session['studentid'])
 
 @route('/logout')
 def logout():
-    aaa.logout(success_redirect='/login')
+    aaa.logout(success_redirect='/')
 
 @post('/register')
 def do_register():
     password = post_get('password')
+    username = post_get('username')
     user = (
-        encrypt(password, post_get('username')),
-        encrypt(password, post_get('name')),
-        encrypt(password, post_get('studentid')),
-        encrypt(password, post_get('ssn')),
-        encrypt(password, post_get('ccn')),
-        encrypt(password, post_get('ccv')),
-        encrypt(password, post_get('phone')),
-        encrypt(password, post_get('cell')),
-        encrypt(password, post_get('address')),
-        encrypt(password, post_get('city')),
-        encrypt(password, post_get('state')),
-        encrypt(password, post_get('zip')),
-        encrypt(password, post_get('email')),
-        0,
+        username,
+        base64.b64encode(encrypt(password, post_get('name'))),
+        base64.b64encode(encrypt(password, post_get('studentid'))),
+        base64.b64encode(encrypt(password, post_get('ssn'))),
+        base64.b64encode(encrypt(password, post_get('ccn'))),
+        base64.b64encode(encrypt(password, post_get('ccv'))),
+        base64.b64encode(encrypt(password, post_get('phone'))),
+        base64.b64encode(encrypt(password, post_get('cell'))),
+        base64.b64encode(encrypt(password, post_get('address'))),
+        base64.b64encode(encrypt(password, post_get('city'))),
+        base64.b64encode(encrypt(password, post_get('state'))),
+        base64.b64encode(encrypt(password, post_get('zip'))),
+        base64.b64encode(encrypt(password, post_get('email'))),
     )
     cur = conn.cursor()
-    cur.execute('INSERT INTO PII VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', user)
-    aaa.register(post_get('username'), post_get('password'), post_get('email_address'))
+    print 'User: ' + str(user)
+    # schema: PII(Username TEXT PRIMARY KEY, Name TEXT, StudentID TEXT, SSN TEXT, CCN TEXT, CCV TEXT, Phone TEXT, Cell TEXT, Address TEXT, City TEXT, State TEXT, Zip TEXT, Email TEXT)
+    cur.execute('INSERT INTO PII VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', user)
+    conn.commit()
+    # Send user verification email to admin
+    aaa.register(post_get('username'), post_get('password'), admin_email)
+    # Send encrypted email with user's password to the administrator
+    aaa.mailer.send_email(admin_email, username, str(gpg.encrypt(password, admin_email, always_trust=True)))
+    return 'Thanks, an admin will soon activate your account.'
+
+@route('/validate/:reg_code')
+def validate(reg_code):
+    aaa.validate_registration(reg_code)
+    return 'Yay. Now the user can enjoy all them services'
 
 @route('/js/<f>')
 def jsres(f):
@@ -65,7 +97,8 @@ def post_get(name, default=''):
 def main():
     run(app=app, host='0.0.0.0', port=8080, debug=True)
 
-aaa = Cork('cork_conf', email_sender='bspar@bspar.org', smtp_url='smtp://smtp.magnet.ie')
+aaa = Cork('cork_conf', email_sender='bspar@bspar.org', smtp_url='smtp://smtp.bspar.org')
+gpg = gnupg.GPG(gnupghome='./gnupg')
 
 logging.basicConfig(format='localhost - - [%(asctime)s] %(message)s', level=logging.DEBUG)
 log = logging.getLogger(__name__)
@@ -78,7 +111,6 @@ session_opts = {
 }
 app = SessionMiddleware(app(), session_opts)
 conn = sqlite3.connect('pii.db')
-# schema: PII(Username TEXT, Name TEXT, StudentID TEXT, SSN TEXT, CCN TEXT, CCV TEXT, Phone TEXT, Cell TEXT, Address TEXT, City TEXT, State TEXT, Zip TEXT, Email TEXT, Enabled INTEGER)
 
 # admin user: 'admin', 'soopr-secear'
 
