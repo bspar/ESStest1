@@ -57,7 +57,7 @@ def do_register():
         base64.b64encode(encrypt(password, post_get('city'))),
         base64.b64encode(encrypt(password, post_get('state'))),
         base64.b64encode(encrypt(password, post_get('zip'))),
-        base64.b64encode(encrypt(password, post_get('email'))),
+        post_get('email'),
     )
     cur = conn.cursor()
     print 'User: ' + str(user)
@@ -72,6 +72,9 @@ def do_register():
 
 @route('/validate/:reg_code')
 def validate(reg_code):
+    user = aaa._store.pending_registrations[reg_code]['username']
+    email = base64.b64decode(conn.execute('SELECT Email from PII WHERE Username=?', (user,)).fetchone())
+    aaa.mailer.send_email(email, 'Your STUPIDCOMP account has been approved!', 'Your STUPIDCOMP account has been approved! You may now use the services.')
     aaa.validate_registration(reg_code)
     return 'Yay. Now the user can enjoy all them services'
 
