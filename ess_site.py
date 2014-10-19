@@ -111,6 +111,9 @@ def postd():
 def post_get(name, default=''):
     return request.POST.get(name, default).strip()
 
+def getapp():
+    return app
+
 def main():
     run(app=app, host='0.0.0.0', port=8080, debug=True)
 
