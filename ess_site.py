@@ -129,7 +129,7 @@ aaa = Cork('cork_conf', email_sender='bspar@bspar.org', smtp_url='smtp://smtp.bs
 gpg = gnupg.GPG(gnupghome='./gnupg')
 
 # Logging module (append only)
-logging.basicConfig(format='localhost - - [%(asctime)s] %(message)s', level=logging.DEBUG)
+logging.basicConfig(filename='website.log', format='localhost - - [%(asctime)s] %(message)s', level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 # Enable use of session data
