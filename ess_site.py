@@ -19,7 +19,9 @@ def do_login():
     username = post_get('username')
     password = post_get('password')
     session = request.environ['beaker.session'] # Implement session storage
+    conn = sqlite3.connect('pii.db')
     row = conn.execute('SELECT Username, Name, StudentID from PII WHERE Username=?', (username,)).fetchone()
+    conn.close()
     if not row:     # Make sure the user exists - if not, say 'Nope. Tey again.'
         return 'Nope. Try again.'
     # Add some PII to the session (server side)
@@ -67,11 +69,13 @@ def do_register():
         base64.b64encode(encrypt(password, post_get('zip'))),
         post_get('email'),
     )
+    conn = sqlite3.connect('pii.db')
     cur = conn.cursor()
     print 'User: ' + str(user)
     # schema: PII(Username TEXT PRIMARY KEY, Name TEXT, StudentID TEXT, SSN TEXT, CCN TEXT, CCV TEXT, Phone TEXT, Cell TEXT, Address TEXT, City TEXT, State TEXT, Zip TEXT, Email TEXT)
     cur.execute('INSERT INTO PII VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', user)  # add user to database
     conn.commit()
+    conn.close()
     # Send user verification email to admin
     aaa.register(post_get('username'), post_get('password'), admin_email)
     # Send encrypted email with user's password to the administrator
@@ -84,7 +88,9 @@ def validate(reg_code):
     # Get the username of the registration code
     user = aaa._store.pending_registrations[reg_code]['username']
     # Get the user's email from the database
+    conn = sqlite3.connect('pii.db')
     email = conn.execute('SELECT Email from PII WHERE Username=?', (user,)).fetchone()[0]
+    conn.close()
     # Send notification email to user
     aaa.mailer.send_email(email, 'Your STUPIDCOMP account has been approved!', 'Your STUPIDCOMP account has been approved! You may now use the services.')
     # Do the actual validation
@@ -135,12 +141,7 @@ session_opts = {
 }
 app = SessionMiddleware(app(), session_opts)
 
-# Create database connection object
-conn = sqlite3.connect('pii.db')
-
 # admin user: 'admin', 'soopr-secear'
 
 if __name__ == '__main__':
-    if not conn:
-        raise Exception('Cannot connect to pii.db')
     main()
